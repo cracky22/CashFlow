@@ -1,8 +1,8 @@
-document.getElementById('addForm').addEventListener('submit', function(event) {
+document.getElementById('decreaseForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    const reason = document.getElementById('reason').value.trim();
-    const value = parseFloat(document.getElementById('value').value);
+    const reason = document.getElementById('reason_d').value.trim();
+    const value = parseFloat(document.getElementById('value_d').value);
 
     if (reason && !isNaN(value)) {
         const date = new Date().toISOString().split('T')[0];
@@ -11,7 +11,8 @@ document.getElementById('addForm').addEventListener('submit', function(event) {
         let balanceHistory = JSON.parse(localStorage.getItem('balanceHistory')) || [];
         balanceHistory.push(newEntry);
         localStorage.setItem('balanceHistory', JSON.stringify(balanceHistory));
-        document.getElementById('addForm').reset();
+        document.getElementById('decreaseForm').reset();
+
         alert('Transaktion hinzugefügt!');
     } else {
         alert('Bitte alle Felder korrekt ausfüllen.');

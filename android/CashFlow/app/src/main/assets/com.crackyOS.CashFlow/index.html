@@ -67,28 +67,20 @@
           <center>
             <div id="mainSection" class="section active">
               <br />
-              <div
-                id="diagramm"
-                class="diagramm"
-                onclick="show_section('historySection');"
-              >
+              <div id="diagramm" class="diagramm" onclick="show_section('historySection');">
                 <div style="width: 320px; height: 200px">
                   <canvas id="balanceChart"></canvas>
                 </div>
-
                 <script src="./src/js/diagram.js"></script>
               </div>
               <br />
               <button
                 onclick="show_section('increaseSection');"
-                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-              >
-                mehrung</button
-              >&nbsp;
+                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                mehrung</button>&nbsp;
               <button
                 onclick="show_section('decreaseSection');"
-                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
-              >
+                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                 minderung
               </button>
             </div>
@@ -110,57 +102,72 @@
                     return;
                   }
 
-                  entriesContainer.innerHTML = balanceHistory
-                    .map(
-                      (entry) => `
-                <div class="entry">
-                    <div class="date">${entry.date}</div>
-                    <div class="value">${entry.value}</div>
-                </div>
-            `
-                    )
-                    .join("");
-                }
+                  entriesContainer.innerHTML = balanceHistory.map((entry) => `
+                    <div class="entry">
+                        <div class="date">${entry.date}</div>
+                        <div class="value">${entry.value}</div>
+                    </div>`).join("");
+                  }
 
                 displayEntries();
               </script>
             </div>
 
+
+
+
             <div id="increaseSection" class="section">
+              <br><br>
               <div class="form-container">
-                <h2>Neue Transaktion hinzufügen</h2>
-                <form id="addForm">
-                  <label for="reason">Einnahmegrund:</label>
-                  <input type="text" id="reason" name="reason" required />
-
-                  <label for="value">Wert:</label>
-                  <input type="number" id="value" name="value" step="any" required />
-
-                  <button type="submit">Hinzufügen</button>
+                <h5>Neue Transaktion hinzufügen</h5>
+                <form id="increaseForm">
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="reason_i">
+                    <label class="mdl-textfield__label" for="reason_i">Grund Einnahme</label>
+                  </div>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="value_i">
+                    <label class="mdl-textfield__label" for="value_i">Wert der Einnahme</label>
+                    <span class="mdl-textfield__error">Input is not a number!</span>
+                  </div><br><br>
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit">Hinzufügen</button>
                 </form>
               </div>
               <script src="./src/js/increase.js"></script>
             </div>
 
+
+
+
             <div id="decreaseSection" class="section">
+              <br><br>
               <div class="form-container">
-                <h2>Neue Transaktion hinzufügen</h2>
-                <form id="addForm">
-                  <label for="reason">Ausgabegrund:</label>
-                  <input type="text" id="reason" name="reason" required />
-
-                  <label for="value">Wert:</label>
-                  <input type="number" id="value" name="value" step="any" required />
-
-                  <button type="submit">Hinzufügen</button>
+                <h5>Neue Transaktion hinzufügen</h5>
+                <form id="decreaseForm">
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="reason_d">
+                    <label class="mdl-textfield__label" for="reason_d">Grund Ausgabe</label>
+                  </div>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="value_d">
+                    <label class="mdl-textfield__label" for="value_d">Wert der Ausgabe</label>
+                    <span class="mdl-textfield__error">Input is not a number!</span>
+                  </div><br><br>
+                  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit">Hinzufügen</button>
                 </form>
               </div>
               <script src="./src/js/decrease.js"></script>
             </div>
 
+
+
+
             <div id="pinSection" class="section">
               <h4>pinSection</h4>
             </div>
+
+
+
 
             <div id="debugSection" class="section">
               <h4>debugSection</h4>

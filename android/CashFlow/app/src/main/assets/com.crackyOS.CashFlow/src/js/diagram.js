@@ -34,11 +34,17 @@ const config = {
     scales: {
       y: {
         beginAtZero: true,
-        min: Math.min(...data) * 1.1,
-        max: Math.max(...data) * 1.1,
-      },
-    },
-  },
+        min: Math.floor(Math.min(...data) * 1.1),
+        max: Math.ceil(Math.max(...data) * 1.1),
+        ticks: {
+          stepSize: 1,  // Schrittweite auf der Y-Achse auf 1 festlegen
+          callback: function(value) {
+            return Number.isInteger(value) ? value : null; // Zeige nur ganze Zahlen
+          }
+        }
+      }
+    }
+  }
 };
 
 const balanceChart = new Chart(ctx, config);
