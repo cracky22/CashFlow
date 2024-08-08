@@ -1,0 +1,4 @@
+[page]
+
+- Betragsveränderungen auf [main -> manage], auswahl ob Minderung oder Mehrung via 
+- Betragsminderung [manage] -> Angabe für was 
