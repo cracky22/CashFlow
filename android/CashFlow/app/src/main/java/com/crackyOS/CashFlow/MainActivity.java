@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setDomStorageEnabled(true);
         webSettings.setAllowFileAccess(true);
         webView.setWebViewClient(new Callback());
-        webView.loadUrl("file:///android_asset/index.html");
+        webView.loadUrl("file:///android_asset/com.crackyOS.CashFlow/index.html");
     }
 
     private class Callback extends WebViewClient {
