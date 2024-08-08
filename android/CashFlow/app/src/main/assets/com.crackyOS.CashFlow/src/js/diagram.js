@@ -1,77 +1,84 @@
-function getCurrentMonthData(balanceHistory) {
-  const now = new Date();
-  const currentMonth = now.getMonth();  // 0-based index (0 = January)
-  const currentYear = now.getFullYear();
-
-  return balanceHistory.filter(entry => {
-      const entryDate = new Date(entry.date);
-      return entryDate.getMonth() === currentMonth && entryDate.getFullYear() === currentYear;
-  });
-}
-
-function calculateTotals(data) {
-  const totalIncome = data.filter(value => value > 0).reduce((acc, value) => acc + value, 0);
-  const totalExpense = data.filter(value => value < 0).reduce((acc, value) => acc + Math.abs(value), 0);
-
-  return {
-      totalIncome,
-      totalExpense
-  };
-}
+let balanceChart;  // Variable für das Chart-Objekt
 
 function loadChart() {
-  const ctx = document.getElementById("balanceChart").getContext("2d");
-  const balanceHistory = JSON.parse(localStorage.getItem("balanceHistory")) || [];
+    const ctx = document.getElementById("balanceChart").getContext("2d");
+    const balanceHistory = JSON.parse(localStorage.getItem("balanceHistory")) || [];
 
-  const monthlyData = getCurrentMonthData(balanceHistory);
+    // Daten aggregieren: Summiere die Werte nach Datum
+    const aggregatedData = balanceHistory.reduce((acc, entry) => {
+        const date = entry.date;
+        const value = parseFloat(entry.value);
 
-  if (monthlyData.length === 0) {
-      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-      return;  // No data to display
-  }
+        if (!acc[date]) {
+            acc[date] = 0;
+        }
+        acc[date] += value;
+        return acc;
+    }, {});
 
-  const data = monthlyData.map(entry => parseFloat(entry.value));
-  const { totalIncome, totalExpense } = calculateTotals(data);
+    const labels = Object.keys(aggregatedData);
+    const data = Object.values(aggregatedData);
 
-  const chartData = {
-      labels: ['Einnahmen', 'Ausgaben'],
-      datasets: [{
-          data: [totalIncome, totalExpense],
-          backgroundColor: ['rgba(76, 175, 80, 0.6)', 'rgba(244, 67, 54, 0.6)'],
-          borderColor: ['rgba(76, 175, 80, 1)', 'rgba(244, 67, 54, 1)'],
-          borderWidth: 1
-      }]
-  };
+    // Daten für Einnahmen und Ausgaben separieren
+    const incomeData = data.map(value => (value > 0 ? value : 0));
+    const expenseData = data.map(value => (value < 0 ? value : 0));
 
-  const config = {
-      type: 'pie',
-      data: chartData,
-      options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-              legend: {
-                  position: 'top',
-              },
-              tooltip: {
-                  callbacks: {
-                      label: function(tooltipItem) {
-                          const value = tooltipItem.raw;
-                          return `${tooltipItem.label}: ${value.toFixed(2)} €`;
-                      }
-                  }
-              }
-          }
-      }
-  };
+    // Wenn das Diagramm bereits existiert, zerstöre es, bevor es neu erstellt wird
+    if (balanceChart) {
+        balanceChart.destroy();
+    }
 
-  // Zerstöre das bestehende Diagramm, falls vorhanden
-  if (window.balanceChart && window.balanceChart instanceof Chart) {
-      window.balanceChart.destroy();
-  }
+    const config = {
+        type: "line",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Einnahmen",
+                    data: incomeData,
+                    borderColor: "#4caf50",  // Modernes Grün
+                    backgroundColor: "rgba(76, 175, 80, 0.2)",
+                    borderWidth: 2,
+                    fill: false,
+                    tension: 0.4,  // Linien etwas geschwungener machen
+                    pointBackgroundColor: "#4caf50",
+                    pointBorderColor: "#4caf50",
+                },
+                {
+                    label: "Ausgaben",
+                    data: expenseData,
+                    borderColor: "#f44336",  // Modernes Rot
+                    backgroundColor: "rgba(244, 67, 54, 0.2)",
+                    borderWidth: 2,
+                    fill: false,
+                    tension: 0.4,  // Linien etwas geschwungener machen
+                    pointBackgroundColor: "#f44336",
+                    pointBorderColor: "#f44336",
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    min: Math.floor(Math.min(...expenseData) * 1.1),
+                    max: Math.ceil(Math.max(...incomeData) * 1.1),
+                    ticks: {
+                        stepSize: 1,  // Schrittweite auf der Y-Achse auf 1 festlegen
+                        callback: function(value) {
+                            return Number.isInteger(value) ? value : null;  // Zeige nur ganze Zahlen
+                        }
+                    }
+                }
+            }
+        }
+    };
 
-  // Erstelle ein neues Diagramm
-  window.balanceChart = new Chart(ctx, config);
+    // Neues Diagramm erstellen
+    balanceChart = new Chart(ctx, config);
 }
 
+// Initiales Laden des Diagramms
 loadChart();
