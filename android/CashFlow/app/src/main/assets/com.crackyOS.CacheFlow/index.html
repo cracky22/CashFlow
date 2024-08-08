@@ -42,13 +42,73 @@
         <div class="page-content">
           <center>
             <div id="mainSection" class="section active">
-              <h4>mainSection</h4>
+              <br />
+              <div id="diagramm" class="diagramm" onclick="show_section('historySection');">
+                <div style="width: 600px; height: 400px;">
+                    <canvas id="balanceChart"></canvas>
+                </div>
+            
+                <script>
+                    // Beispiel-Daten im LocalStorage (für Testzwecke)
+                    localStorage.setItem('balanceHistory', JSON.stringify(["+100", "-50", "+75", "-30", "+150", "-90"]));
+            
+                    // JavaScript-Code für das Diagramm
+                    const ctx = document.getElementById('balanceChart').getContext('2d');
+                    const balanceHistory = JSON.parse(localStorage.getItem('balanceHistory'));
+            
+                    const data = balanceHistory.map(entry => parseFloat(entry));
+            
+                    const labels = balanceHistory.map((_, index) => `Eintrag ${index + 1}`);
+            
+                    const backgroundColors = data.map(value => value >= 0 ? 'rgba(0, 255, 0, 0.2)' : 'rgba(255, 0, 0, 0.2)');
+                    const borderColors = data.map(value => value >= 0 ? 'rgba(0, 255, 0, 1)' : 'rgba(255, 0, 0, 1)');
+            
+                    const config = {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Balance History',
+                                data: data,
+                                backgroundColor: backgroundColors,
+                                borderColor: borderColors,
+                                borderWidth: 2,
+                                fill: false,
+                                pointBackgroundColor: borderColors,
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    min: Math.min(...data) * 1.1,
+                                    max: Math.max(...data) * 1.1
+                                }
+                            }
+                        }
+                    };
+            
+                    const balanceChart = new Chart(ctx, config);
+                </script>
+              </div>
+              <br>
+              <button onclick="show_section('increaseSection');"
+              class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                mehrung
+              </button>&nbsp;
+              <button onclick="show_section('decreaseSection');"
+              class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                minderung
+              </button>
             </div>
             <div id="historySection" class="section">
               <h4>historySection</h4>
             </div>
-            <div id="manageSection" class="section">
-              <h4>manageSection</h4>
+            <div id="increaseSection" class="section">
+              <h4>increaseSection</h4>
+            </div>
+            <div id="decreaseSection" class="section">
+              <h4>decreaseSection</h4>
             </div>
 
             <div id="pinSection" class="section">
