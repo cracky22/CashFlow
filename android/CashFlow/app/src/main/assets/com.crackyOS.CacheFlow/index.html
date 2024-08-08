@@ -54,52 +54,11 @@
             <div id="mainSection" class="section active">
               <br />
               <div id="diagramm" class="diagramm" onclick="show_section('historySection');">
-                <div style="width: 600px; height: 400px;">
+                <div style="width: 320px; height: 200px;">
                     <canvas id="balanceChart"></canvas>
                 </div>
             
-                <script>
-                    // Beispiel-Daten im LocalStorage (für Testzwecke)
-                    localStorage.setItem('balanceHistory', JSON.stringify(["+100", "-50", "+75", "-30", "+150", "-90"]));
-            
-                    // JavaScript-Code für das Diagramm
-                    const ctx = document.getElementById('balanceChart').getContext('2d');
-                    const balanceHistory = JSON.parse(localStorage.getItem('balanceHistory'));
-            
-                    const data = balanceHistory.map(entry => parseFloat(entry));
-            
-                    const labels = balanceHistory.map((_, index) => `Eintrag ${index + 1}`);
-            
-                    const backgroundColors = data.map(value => value >= 0 ? 'rgba(0, 255, 0, 0.2)' : 'rgba(255, 0, 0, 0.2)');
-                    const borderColors = data.map(value => value >= 0 ? 'rgba(0, 255, 0, 1)' : 'rgba(255, 0, 0, 1)');
-            
-                    const config = {
-                        type: 'line',
-                        data: {
-                            labels: labels,
-                            datasets: [{
-                                label: 'Balance History',
-                                data: data,
-                                backgroundColor: backgroundColors,
-                                borderColor: borderColors,
-                                borderWidth: 2,
-                                fill: false,
-                                pointBackgroundColor: borderColors,
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                y: {
-                                    beginAtZero: true,
-                                    min: Math.min(...data) * 1.1,
-                                    max: Math.max(...data) * 1.1
-                                }
-                            }
-                        }
-                    };
-            
-                    const balanceChart = new Chart(ctx, config);
-                </script>
+                <script src="./src/js/diagram.js"></script>
               </div>
               <br>
               <button onclick="show_section('increaseSection');"
