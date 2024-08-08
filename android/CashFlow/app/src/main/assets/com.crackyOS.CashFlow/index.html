@@ -58,15 +58,17 @@
       <div class="mdl-layout__drawer">
         <span class="mdl-layout-title" id="menuTitle">Menü</span>
         <nav class="mdl-navigation">
-          <!--<a class="mdl-navigation__link" href="">Link</a>
-          <a class="mdl-navigation__link" href="">Link</a>-->
+          <a class="mdl-navigation__link" onclick="show_section('debugSection');">DEBUG</a>
+          <!--<a class="mdl-navigation__link" href="">Link</a>-->
         </nav>
       </div>
       <main class="mdl-layout__content">
         <div class="page-content">
           <center>
             <div id="mainSection" class="section active">
-              <br><br>
+              <br>
+              <!--<h4 id="nameGreeting"></h4>-->
+              <h5>Aktueller Monat</h5>
               <div id="diagramm" class="diagramm" onclick="show_section('historySection');">
                 <div style="width: 340px; height: 200px;">
                   <canvas id="balanceChart" style="width: 100%; height: 100%;"></canvas>
@@ -96,6 +98,7 @@
                       <h4>Alle Transaktionen</h4>
                   </div>
                   <div id="entries"></div>
+                  <button onclick="R();" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Alles löschen</button>
               </div>
           </div>
           
@@ -141,6 +144,15 @@
             }
             displayBalance();
 
+            /*window.addEventListener('load', () => {
+            const storedName = localStorage.getItem('name');
+            if (storedName) {
+              const nameGreetingElement = document.getElementById('nameGreeting');
+              if (nameGreetingElement) {
+                nameGreetingElement.textContent = `Hallo ${storedName}!`;
+              }
+            }
+          });*/
           </script>
           
 
@@ -203,6 +215,9 @@
 
             <div id="debugSection" class="section">
               <h4>debugSection</h4>
+              <input id="name" placeholder="Name">
+              <button onclick="setName();">setName</button>
+              <br><br>
               <button onclick="setTestData();">localStorage.testData()</button>
               <br><br>
               <button onclick="localStorage.clear();">localStorage.clear()</button>
@@ -210,6 +225,10 @@
               <button onclick="location.reload();">location.reload()</button>
 
               <script>
+                function setName() {
+                  const name = document.getElementById("name").value;
+                  localStorage.setItem("name", name);
+                }
                 function setTestData() {
                   const exampleData = [{ "date": "2024-07-01", "reason": "Lohn 20h", "value": "+320" },{ "date": "2024-07-02", "reason": "USB-Stick", "value": "-32" },{ "date": "2024-07-03", "reason": "Festplatte", "value": "-99" },{ "date": "2024-07-04", "reason": "Lohn 13,7h", "value": "+220" },{ "date": "2024-07-05", "reason": "Lohn 7,5h", "value": "+120" },{ "date": "2024-07-06", "reason": "Lohn 26,7h", "value": "+420" },{ "date": "2024-07-07", "reason": "Lohn 7,5h", "value": "+120" },{ "date": "2024-07-08", "reason": "Lohn 13,7h", "value": "+220" },{ "date": "2024-07-09", "reason": "Einkauf", "value": "-67" },{ "date": "2024-07-10", "reason": "Metzger", "value": "-3" },{ "date": "2024-07-11", "reason": "Tanken", "value": "-59" },{ "date": "2024-07-12", "reason": "Geburtstag", "value": "+420" },{ "date": "2024-07-13", "reason": "Lohn 20h", "value": "+320" },{ "date": "2024-07-14", "reason": "Fahrrad", "value": "-680" },{ "date": "2024-07-15", "reason": "Lohn 7,5h", "value": "+120" },{ "date": "2024-07-15", "reason": "Einkauf", "value": "-20" },{ "date": "2024-07-16", "reason": "Lohn 7,5h", "value": "+120" },{ "date": "2024-07-16", "reason": "Mittagessen", "value": "-13,50" },{ "date": "2024-07-17", "reason": "Lohn 7,5h", "value": "+120" },{ "date": "2024-07-17", "reason": "Kantine", "value": "-8,50" },{ "date": "2024-07-18", "reason": "Lohn 7,5h", "value": "+120" },{ "date": "2024-07-19", "reason": "Lohn 9h", "value": "+144" },{ "date": "2024-07-20", "reason": "Lohn 3h", "value": "+48" },{ "date": "2024-07-21", "reason": "Lohn 6h", "value": "+96" },{ "date": "2024-07-22", "reason": "Sony Kopfhörer", "value": "-350" },{ "date": "2024-07-23", "reason": "Lohn 7,5h", "value": "+120" },{ "date": "2024-07-24", "reason": "Lohn 7,5h", "value": "+120" },{ "date": "2024-07-25", "reason": "Lohn 5,6", "value": "+90" },{ "date": "2024-07-26", "reason": "Ladekabel", "value": "-20" },{ "date": "2024-07-27", "reason": "Galaxy Buds", "value": "-117" },{ "date": "2024-08-01", "reason": "Lohn 20h", "value": "+320" },{ "date": "2024-08-02", "reason": "Kaffeemaschine", "value": "-85" },{ "date": "2024-08-03", "reason": "Lohn 13,7h", "value": "+220" },{ "date": "2024-08-04", "reason": "Einkauf", "value": "-50" },{ "date": "2024-08-05", "reason": "Lohn 7,5h", "value": "+120" },{ "date": "2024-08-06", "reason": "Lohn 26,7h", "value": "+420" },{ "date": "2024-08-07", "reason": "Tanken", "value": "-60" },{ "date": "2024-08-08", "reason": "Geburtstag", "value": "+400" },{ "date": "2024-08-09", "reason": "Lohn 7,5h", "value": "+120" },{ "date": "2024-08-10", "reason": "Mittagessen", "value": "-15" },{ "date": "2024-08-11", "reason": "Lohn 13,7h", "value": "+220" },{ "date": "2024-08-12", "reason": "Kantine", "value": "-9" },{ "date": "2024-08-13", "reason": "Lohn 7,5h", "value": "+120" },{ "date": "2024-08-14", "reason": "Lohn 5,6h", "value": "+90" },{ "date": "2024-08-15", "reason": "Lohn 9h", "value": "+144" },{ "date": "2024-08-16", "reason": "Einkauf", "value": "-40" },{ "date": "2024-08-17", "reason": "Lohn 7,5h", "value": "+120" },{ "date": "2024-08-18", "reason": "Buch", "value": "-25" },{ "date": "2024-08-19", "reason": "Lohn 7,5h", "value": "+120" },{ "date": "2024-08-20", "reason": "Ladekabel", "value": "-22" },{ "date": "2024-08-21", "reason": "Lohn 3h", "value": "+48" },{ "date": "2024-08-22", "reason": "Lohn 6h", "value": "+96" },{ "date": "2024-08-23", "reason": "Einkauf", "value": "-70" },{ "date": "2024-08-24", "reason": "Lohn 7,5h", "value": "+120" },{ "date": "2024-08-25", "reason": "Fahrradreparatur", "value": "-150" },{ "date": "2024-09-01", "reason": "Lohn 20h", "value": "+320" },{ "date": "2024-09-02", "reason": "Hochdruckreiniger", "value": "-90" },{ "date": "2024-09-03", "reason": "Lohn 13,7h", "value": "+220" },{ "date": "2024-09-04", "reason": "Einkauf", "value": "-55" },{ "date": "2024-09-05", "reason": "Lohn 7,5h", "value": "+120" },{ "date": "2024-09-06", "reason": "Lohn 26,7h", "value": "+420" },{ "date": "2024-09-07", "reason": "Tanken", "value": "-65" },{ "date": "2024-09-08", "reason": "Geburtstag", "value": "+430" },{ "date": "2024-09-09", "reason": "Lohn 7,5h", "value": "+120" },{ "date": "2024-09-10", "reason": "Mittagessen", "value": "-14" },{ "date": "2024-09-11", "reason": "Lohn 13,7h", "value": "+220" },{ "date": "2024-09-12", "reason": "Kantine", "value": "-8" },{ "date": "2024-09-13", "reason": "Lohn 7,5h", "value": "+120" },{ "date": "2024-09-14", "reason": "Lohn 5,6h", "value": "+90" },{ "date": "2024-09-15", "reason": "Lohn 9h", "value": "+144" },{ "date": "2024-09-16", "reason": "Einkauf", "value": "-45" },{ "date": "2024-09-17", "reason": "Lohn 7,5h", "value": "+120" },{ "date": "2024-09-18", "reason": "Buch", "value": "-30" },{ "date": "2024-09-19", "reason": "Lohn 7,5h", "value": "+120" },{ "date": "2024-09-20", "reason": "Ladekabel", "value": "-25" },{ "date": "2024-09-21", "reason": "Lohn 3h", "value": "+48" },{ "date": "2024-09-22", "reason": "Lohn 6h", "value": "+96" },{ "date": "2024-09-23", "reason": "Einkauf", "value": "-75" },{ "date": "2024-09-24", "reason": "Lohn 7,5h", "value": "+120" },{ "date": "2024-09-25", "reason": "Fahrradreparatur", "value": "-180" },{ "date": "2024-10-01", "reason": "Lohn 20h", "value": "+320" },{ "date": "2024-10-02", "reason": "Router", "value": "-70" },{ "date": "2024-10-03", "reason": "Lohn 13,7h", "value": "+220" },{ "date": "2024-10-04", "reason": "Einkauf", "value": "-60" },{ "date": "2024-10-05", "reason": "Lohn 7,5h", "value": "+120" },{ "date": "2024-10-06", "reason": "Lohn 26,7h", "value": "+420" },{ "date": "2024-10-07", "reason": "Tanken", "value": "-70" },{ "date": "2024-10-08", "reason": "Geburtstag", "value": "+450" },{ "date": "2024-10-09", "reason": "Lohn 7,5h", "value": "+120" },{ "date": "2024-10-10", "reason": "Mittagessen", "value": "-16" },{ "date": "2024-10-11", "reason": "Lohn 13,7h", "value": "+220" },{ "date": "2024-10-12", "reason": "Kantine", "value": "-10" },{ "date": "2024-10-13", "reason": "Lohn 7,5h", "value": "+120" },{ "date": "2024-10-14", "reason": "Lohn 5,6h", "value": "+90" },{ "date": "2024-10-15", "reason": "Lohn 9h", "value": "+144" },{ "date": "2024-10-16", "reason": "Einkauf", "value": "-50" },{ "date": "2024-10-17", "reason": "Lohn 7,5h", "value": "+120" },{ "date": "2024-10-18", "reason": "Buch", "value": "-35" },{ "date": "2024-10-19", "reason": "Lohn 7,5h", "value": "+120" },{ "date": "2024-10-20", "reason": "Ladekabel", "value": "-30" },{ "date": "2024-10-21", "reason": "Lohn 3h", "value": "+48" },{ "date": "2024-10-22", "reason": "Lohn 6h", "value": "+96" },{ "date": "2024-10-23", "reason": "Einkauf", "value": "-85" },{ "date": "2024-10-24", "reason": "Lohn 7,5h", "value": "+120" },{ "date": "2024-10-25", "reason": "Fahrradreparatur", "value": "-200" }];
                   localStorage.setItem(

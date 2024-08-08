@@ -4,8 +4,20 @@ function loadChart() {
     const ctx = document.getElementById("balanceChart").getContext("2d");
     const balanceHistory = JSON.parse(localStorage.getItem("balanceHistory")) || [];
 
+    // Aktuelles Datum und Monat ermitteln
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = String(now.getMonth() + 1).padStart(2, '0');  // Monat als zweistellige Zahl
+
+    // Filtere Daten für den aktuellen Monat
+    const filteredData = balanceHistory.filter(entry => {
+        const entryDate = new Date(entry.date);
+        return entryDate.getFullYear() === currentYear && 
+               String(entryDate.getMonth() + 1).padStart(2, '0') === currentMonth;
+    });
+
     // Daten aggregieren: Summiere die Werte nach Datum
-    const aggregatedData = balanceHistory.reduce((acc, entry) => {
+    const aggregatedData = filteredData.reduce((acc, entry) => {
         const date = entry.date;
         const value = parseFloat(entry.value);
 

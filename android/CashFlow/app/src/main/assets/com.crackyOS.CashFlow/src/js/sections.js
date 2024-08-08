@@ -11,6 +11,8 @@ function show_section(section) {
     });
     //document.getElementById("masterTitle").innerHTML = `CashFlow <i><small><small><small>[${section}]</small></small></small></i>`;
     loadChart();
+    displayBalance();
+    displayEntries();
     if (section === "mainSection") {
         document.getElementById("home").style.display = "none";
     } else {
