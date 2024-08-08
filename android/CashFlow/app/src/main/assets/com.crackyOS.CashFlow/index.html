@@ -21,12 +21,12 @@
     }
 
     .chart-container {
-            width: 310px;
-            height: 180px;
+      width: 310px;
+      height: 180px;
     }
     canvas {
-        width: 310px !important;
-        height: 180px !important;
+      width: 310px !important;
+      height: 180px !important;
     }
   </style>
 
@@ -38,7 +38,20 @@
           <div class="mdl-layout-spacer"></div>
           <nav class="mdl-navigation">
             <!--icons-->
-            <a class="mdl-navigation__link" id="home" style="cursor: pointer;" onclick="show_section('mainSection');"><i class="material-icons">home</i></a>
+            <a
+              class="mdl-navigation__link"
+              id="home"
+              style="cursor: pointer"
+              onclick="show_section('mainSection');"
+              ><i class="material-icons">home</i></a
+            >
+            <a
+              class="mdl-navigation__link"
+              id="debug"
+              style="cursor: pointer"
+              onclick="show_section('debugSection');"
+              ><i class="material-icons">android</i></a
+            >
           </nav>
         </div>
       </header>
@@ -54,59 +67,137 @@
           <center>
             <div id="mainSection" class="section active">
               <br />
-              <div id="diagramm" class="diagramm" onclick="show_section('historySection');">
-                <div style="width: 320px; height: 200px;">
-                    <canvas id="balanceChart"></canvas>
+              <div
+                id="diagramm"
+                class="diagramm"
+                onclick="show_section('historySection');"
+              >
+                <div style="width: 320px; height: 200px">
+                  <canvas id="balanceChart"></canvas>
                 </div>
-            
+
                 <script src="./src/js/diagram.js"></script>
               </div>
-              <br>
-              <button onclick="show_section('increaseSection');"
-              class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-                mehrung
-              </button>&nbsp;
-              <button onclick="show_section('decreaseSection');"
-              class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+              <br />
+              <button
+                onclick="show_section('increaseSection');"
+                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
+                mehrung</button
+              >&nbsp;
+              <button
+                onclick="show_section('decreaseSection');"
+                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+              >
                 minderung
               </button>
             </div>
+
             <div id="historySection" class="section">
-              <h4>historySection</h4>
+              <div class="container">
+                <div class="entry-title">Alle Transaktionen</div>
+                <div id="entries"></div>
+              </div>
+              <script>
+                function displayEntries() {
+                  const entriesContainer = document.getElementById("entries");
+                  const balanceHistory =
+                    JSON.parse(localStorage.getItem("balanceHistory")) || [];
+
+                  if (balanceHistory.length === 0) {
+                    entriesContainer.innerHTML =
+                      "<p>Keine Transaktionen gefunden.</p>";
+                    return;
+                  }
+
+                  entriesContainer.innerHTML = balanceHistory
+                    .map(
+                      (entry) => `
+                <div class="entry">
+                    <div class="date">${entry.date}</div>
+                    <div class="value">${entry.value}</div>
+                </div>
+            `
+                    )
+                    .join("");
+                }
+
+                displayEntries();
+              </script>
             </div>
+
             <div id="increaseSection" class="section">
-                <div class="form-container">
-                    <h2>Neue Transaktion hinzufügen</h2>
-                    <form id="addForm">
-                        <label for="reason">Einnahmegrund:</label>
-                        <input type="text" id="reason" name="reason" required>
-            
-                        <label for="value">Wert:</label>
-                        <input type="number" id="value" name="value" step="any" required>
-            
-                        <button type="submit">Hinzufügen</button>
-                    </form>
-                </div>
-                <script src="./src/js/increase.js"></script>
+              <div class="form-container">
+                <h2>Neue Transaktion hinzufügen</h2>
+                <form id="addForm">
+                  <label for="reason">Einnahmegrund:</label>
+                  <input type="text" id="reason" name="reason" required />
+
+                  <label for="value">Wert:</label>
+                  <input
+                    type="number"
+                    id="value"
+                    name="value"
+                    step="any"
+                    required
+                  />
+
+                  <button type="submit">Hinzufügen</button>
+                </form>
+              </div>
+              <script src="./src/js/increase.js"></script>
             </div>
+
             <div id="decreaseSection" class="section">
-                <div class="form-container">
-                    <h2>Neue Transaktion hinzufügen</h2>
-                    <form id="addForm">
-                        <label for="reason">Ausgabegrund:</label>
-                        <input type="text" id="reason" name="reason" required>
-            
-                        <label for="value">Wert:</label>
-                        <input type="number" id="value" name="value" step="any" required>
-            
-                        <button type="submit">Hinzufügen</button>
-                    </form>
-                </div>
-                <script src="./src/js/increase.js"></script>
+              <div class="form-container">
+                <h2>Neue Transaktion hinzufügen</h2>
+                <form id="addForm">
+                  <label for="reason">Ausgabegrund:</label>
+                  <input type="text" id="reason" name="reason" required />
+
+                  <label for="value">Wert:</label>
+                  <input
+                    type="number"
+                    id="value"
+                    name="value"
+                    step="any"
+                    required
+                  />
+
+                  <button type="submit">Hinzufügen</button>
+                </form>
+              </div>
+              <script src="./src/js/decrease.js"></script>
             </div>
 
             <div id="pinSection" class="section">
               <h4>pinSection</h4>
+            </div>
+
+            <div id="debugSection" class="section">
+              <h4>debugSection</h4>
+              <button onclick="setTestData();">localStorage.testData()</button>
+              <br><br>
+              <button onclick="localStorage.clear();">localStorage.clear()</button>
+              <br><br>
+              <button onclick="location.reload();">location.reload()</button>
+
+              <script>
+                function setTestData() {
+                  const exampleData = [
+                    { date: "2024-08-01", reason: "Gehalt", value: "+100" },
+                    { date: "2024-08-02", reason: "Einkauf", value: "-50" },
+                    { date: "2024-08-03", reason: "Bonus", value: "+75" },
+                    { date: "2024-08-04", reason: "Rechnung", value: "-30" },
+                    { date: "2024-08-05", reason: "Verkauf", value: "+150" },
+                    { date: "2024-08-06", reason: "Miete", value: "-90" },
+                  ];
+                  localStorage.setItem(
+                    "balanceHistory",
+                    JSON.stringify(exampleData)
+                  );
+                }
+              </script>
             </div>
           </center>
         </div>
