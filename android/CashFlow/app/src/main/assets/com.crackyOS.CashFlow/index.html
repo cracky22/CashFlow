@@ -30,7 +30,7 @@
     }
   </style>
 
-  <body>
+  <body onload="document.getElementById('home').style.display = 'none';">
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
       <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
@@ -45,13 +45,13 @@
               onclick="show_section('mainSection');"
               ><i class="material-icons">home</i></a
             >
-            <a
+            <!--<a
               class="mdl-navigation__link"
               id="debug"
               style="cursor: pointer"
               onclick="show_section('debugSection');"
               ><i class="material-icons">android</i></a
-            >
+            >-->
           </nav>
         </div>
       </header>
@@ -119,7 +119,7 @@
                                   ${entry.value}€
                               </div>
                           </div>
-                          <div class="entry-reason">${entry.reason ? entry.reason : ''}</div>
+                          <div class="entry-reason">Grund: ${entry.reason ? entry.reason : ''}</div>
                       </div>
                   </div>`).join("");
               }
