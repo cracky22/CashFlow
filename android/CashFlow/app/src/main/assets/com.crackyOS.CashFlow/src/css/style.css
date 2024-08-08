@@ -53,11 +53,14 @@ div.diagramm {
 .entry-value {
     font-size: 18px;
     font-weight: bold;
-    color: #4caf50;
 }
 
-.entry-value:before {
-    content: attr(data-prefix);
+.entry-value.positive {
+    color: #4caf50;  /* Modernes Grün für positive Werte */
+}
+
+.entry-value.negative {
+    color: #f44336;  /* Modernes Rot für negative Werte */
 }
 
 .entry-reason {
