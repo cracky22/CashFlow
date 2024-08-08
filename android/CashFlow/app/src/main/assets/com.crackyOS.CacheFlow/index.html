@@ -1,44 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./src/mdl/googleAPI-style.css">
-    <link rel="stylesheet" href="./src/mdl/mdl-style.css">
-    <link rel="stylesheet" href="./src/css/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/mdl/googleAPI-style.css" />
+    <link rel="stylesheet" href="./src/mdl/mdl-style.css" />
+    <link rel="stylesheet" href="./src/css/style.css" />
     <script src="./src/mdl/mdl-script.js"></script>
-</head>
-<body>
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <header class="mdl-layout__header">
-      <div class="mdl-layout__header-row">
-        <span class="mdl-layout-title" id="masterTitle">CashFlow</span>
-        <div class="mdl-layout-spacer"></div>
-        <nav class="mdl-navigation mdl-layout--large-screen-only">
+    <script src="./src/js/sections.js"></script>
+  </head>
+
+  <style>
+    .section {
+      display: none !important;
+    }
+
+    .active {
+      display: block !important;
+    }
+  </style>
+
+  <body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title" id="masterTitle">CashFlow</span>
+          <div class="mdl-layout-spacer"></div>
+          <nav class="mdl-navigation mdl-layout--large-screen-only">
             <!--icons-->
+          </nav>
+        </div>
+      </header>
+      <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title" id="menuTitle">Menü</span>
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" href="">Link</a>
+          <a class="mdl-navigation__link" href="">Link</a>
         </nav>
       </div>
-    </header>
-    <div class="mdl-layout__drawer">
-      <span class="mdl-layout-title" id="menuTitle">Manü</span>
-      <nav class="mdl-navigation">
-        <a class="mdl-navigation__link" href="">Link</a>
-        <a class="mdl-navigation__link" href="">Link</a>
-      </nav>
+      <main class="mdl-layout__content">
+        <div class="page-content">
+          <center>
+            <div id="mainSection" class="section active">
+              <h4>mainSection</h4>
+            </div>
+            <div id="historySection" class="section">
+              <h4>historySection</h4>
+            </div>
+            <div id="manageSection" class="section">
+              <h4>manageSection</h4>
+            </div>
+
+            <div id="pinSection" class="section">
+              <h4>pinSection</h4>
+            </div>
+          </center>
+        </div>
+      </main>
     </div>
-    <main class="mdl-layout__content">
-      <div class="page-content">
-        <div id="mainSection" class="section">
-
-        </div>
-        <div id="historySection" class="section">
-
-        </div>
-        <div id="manageSection" class="section">
-
-        </div>
-      </div>
-    </main>
-  </div>
-</body>
+  </body>
 </html>
