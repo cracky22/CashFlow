@@ -12,8 +12,11 @@ document.getElementById('increaseForm').addEventListener('submit', function(even
         balanceHistory.push(newEntry);
         localStorage.setItem('balanceHistory', JSON.stringify(balanceHistory));
         document.getElementById('increaseForm').reset();
-        
-        alert('Transaktion hinzugefügt!');
+
+        show_section('mainSection');
+        setTimeout(() => {
+            loadChart();
+        }, 100);
     } else {
         alert('Bitte alle Felder korrekt ausfüllen.');
     }

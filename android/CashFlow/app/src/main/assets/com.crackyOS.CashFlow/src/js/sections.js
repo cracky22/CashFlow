@@ -9,5 +9,6 @@ function show_section(section) {
             element.classList.remove("active");
         }
     });
-    document.getElementById("masterTitle").innerHTML = `CashFlow <i><small><small><small>[${section}]</small></small></small></i>`;
+    //document.getElementById("masterTitle").innerHTML = `CashFlow <i><small><small><small>[${section}]</small></small></small></i>`;
+    loadChart();
 }

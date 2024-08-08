@@ -66,10 +66,10 @@
         <div class="page-content">
           <center>
             <div id="mainSection" class="section active">
-              <br />
+              <br><br>
               <div id="diagramm" class="diagramm" onclick="show_section('historySection');">
-                <div style="width: 320px; height: 200px">
-                  <canvas id="balanceChart"></canvas>
+                <div style="width: 340px; height: 200px;">
+                  <canvas id="balanceChart" style="width: 100%; height: 100%;"></canvas>
                 </div>
                 <script src="./src/js/diagram.js"></script>
               </div>
@@ -85,33 +85,46 @@
               </button>
             </div>
 
+
+
+
             <div id="historySection" class="section">
               <div class="container">
-                <div class="entry-title">Alle Transaktionen</div>
-                <div id="entries"></div>
+                  <div class="entry-title">
+                      <h4>Alle Transaktionen</h4>
+                  </div>
+                  <div id="entries"></div>
               </div>
-              <script>
-                function displayEntries() {
-                  const entriesContainer = document.getElementById("entries");
-                  const balanceHistory =
-                    JSON.parse(localStorage.getItem("balanceHistory")) || [];
+          </div>
+          
+          <script>
+          function displayEntries() {
+              const entriesContainer = document.getElementById("entries");
+              const balanceHistory = JSON.parse(localStorage.getItem("balanceHistory")) || [];
+          
+              if (balanceHistory.length === 0) {
+                  entriesContainer.innerHTML = "<p>Keine Transaktionen gefunden.</p>";
+                  return;
+              }
+          
+              entriesContainer.innerHTML = balanceHistory.map(entry => `
+                  <div class="entry">
+                      <div class="entry-content">
+                          <div class="entry-header">
+                              <h5 class="entry-title">${entry.date}</h5>
+                              <div class="entry-value ${parseFloat(entry.value) < 0 ? 'negative' : 'positive'}">
+                                  ${entry.value}€
+                              </div>
+                          </div>
+                          <div class="entry-reason">${entry.reason ? entry.reason : ''}</div>
+                      </div>
+                  </div>`).join("");
+          }
+          
+          displayEntries();
+          </script>
+          
 
-                  if (balanceHistory.length === 0) {
-                    entriesContainer.innerHTML =
-                      "<p>Keine Transaktionen gefunden.</p>";
-                    return;
-                  }
-
-                  entriesContainer.innerHTML = balanceHistory.map((entry) => `
-                    <div class="entry">
-                        <div class="date">${entry.date}</div>
-                        <div class="value">${entry.value}</div>
-                    </div>`).join("");
-                  }
-
-                displayEntries();
-              </script>
-            </div>
 
 
 

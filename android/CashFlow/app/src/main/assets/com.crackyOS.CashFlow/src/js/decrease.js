@@ -13,7 +13,10 @@ document.getElementById('decreaseForm').addEventListener('submit', function(even
         localStorage.setItem('balanceHistory', JSON.stringify(balanceHistory));
         document.getElementById('decreaseForm').reset();
 
-        alert('Transaktion hinzugefügt!');
+        show_section('mainSection');
+        setTimeout(() => {
+            loadChart();
+        }, 100);
     } else {
         alert('Bitte alle Felder korrekt ausfüllen.');
     }
